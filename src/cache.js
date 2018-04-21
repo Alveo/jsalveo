@@ -13,21 +13,20 @@ export class Cache {
     return this.database.get(key);
   }
 
-  // TODO: return promise
   async put(key, value) {
     value._id = key;
     
     try {
       var result = await this.get(key);
       value._rev = result._rev;
-      this.database.put(value);
+      await this.database.put(value);
     } catch (error) {
       if (error.status === 404) {
-        this.database.put(value);
+        await this.database.put(value);
       } else if (error.status === 409) {
-        this.put(key, value);
+        await this.put(key, value);
       } else {
-        console.log(error);
+        return Promise.reject(error);
       }
     }
   }
