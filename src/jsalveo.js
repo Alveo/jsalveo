@@ -10,14 +10,6 @@ export class JsAlveo {
     });
   }
 
-  async checkCache(storageName) {
-    var data = await this.database.get(storageName);
-    if (data['storage'] == null) {
-      throw 404;
-    }
-    return data['storage'];
-  }
-
   async retrieve(
     request,
     storageClass,
@@ -30,12 +22,13 @@ export class JsAlveo {
 
     if (useCache) {
       try {
-        var data = await this.checkCache(storageClass);
+        var data = await this.database.get(storageClass);
+        data = data['storage'];
         if (data != null) {
           console.log('Using cache for: ' + storageClass);
           return data;
         }
-      } catch (error) { } // Ignore because we might have a backup
+      } catch (error) { } // Ignore because we might have other options
     }
 
     if (useApi) {
@@ -43,8 +36,7 @@ export class JsAlveo {
 
       if (useCache) {
         console.log('Caching ' + storageClass);
-        // TODO promise return for put
-        this.database.put(storageClass, {storage: response});
+        await this.database.put(storageClass, {storage: response});
       }
 
       return response;
