@@ -14,13 +14,14 @@ export class Cache {
   }
 
   // TODO: return promise
-  put(key, value) {
+  async put(key, value) {
     value._id = key;
-
-    this.get(key).then(result => {
+    
+    try {
+      var result = await this.get(key);
       value._rev = result._rev;
       this.database.put(value);
-    }).catch(error => {
+    } catch (error) {
       if (error.status === 404) {
         this.database.put(value);
       } else if (error.status === 409) {
@@ -28,6 +29,6 @@ export class Cache {
       } else {
         console.log(error);
       }
-    });
+    }
   }
 }

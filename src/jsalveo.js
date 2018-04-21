@@ -10,79 +10,46 @@ export class JsAlveo {
     });
   }
 
-  checkCache(storageName) {
-    return new Promise(
-      (resolve, reject) => {
-        this.database.get(storageName).then(
-          data => {
-            if (data['storage'] == null) {
-              reject(404)
-            }
-            resolve(data['storage']);
-          }
-        ).catch(
-          error => {
-            reject(error)
-          }
-        );
-      }
-    );
+  async checkCache(storageName) {
+    var data = await this.database.get(storageName);
+    if (data['storage'] == null) {
+      throw 404;
+    }
+    return data['storage'];
   }
 
-  retrieve(
+  async retrieve(
     request,
     storageClass,
     useCache= true,
     useApi= true,
   ) {
-    return new Promise(
-      (resolve, reject) => {
-        new Promise(
-          (cacheResolve, cacheReject) => {
-            if (useCache) {
-              this.checkCache(storageClass).then(
-                cachedData => {
-                  console.log('Using DB source for: ' + storageClass);
-                  cacheResolve(cachedData);
-                }
-              ).catch(
-                cacheError => {
-                  cacheReject(cacheError);
-                }
-              );
-            } else {
-              reject('Cache requests not allowed, method flag disabled');
-            }
-          }).then(
-            cachedData => {
-              resolve(cachedData);
-            }
-          ).catch(
-            cacheError => {
-              if (useApi) {
-                request.then(
-                  responseData => {
-                    if (useCache) {
-                      console.log('Caching ' + storageClass);
-                      // TODO promise return for put
-                      this.database.put(storageClass, {storage: responseData});
-                      resolve(responseData);
-                    } else {
-                      resolve(responseData);
-                    }
-                  }
-                ).catch(
-                  apiError => {
-                    reject(apiError);
-                  }
-                );
-              } else {
-                reject('API requests not allowed, method flag disabled');
-              }
-            }
-          );
+    if (!useCache && !useApi) {
+      throw new Error("Both cache and API disabled, this is undefined behaviour");
+    }
+
+    if (useCache) {
+      try {
+        var data = await this.checkCache(storageClass);
+        if (data != null) {
+          console.log('Using cache for: ' + storageClass);
+          return data;
+        }
+      } catch (error) { } // Ignore because we might have a backup
+    }
+
+    if (useApi) {
+      var response = await request;
+
+      if (useCache) {
+        console.log('Caching ' + storageClass);
+        // TODO promise return for put
+        this.database.put(storageClass, {storage: response});
       }
-    );
+
+      return response;
+    }
+    throw new Error("No data");
   }
 
   getListDirectory(useCache= true, useApi= true) {
@@ -105,51 +72,21 @@ export class JsAlveo {
     return this.apiClient.getUserDetails();
   }
 
-  oAuthenticate(clientID, clientSecret, authCode, callbackUrl) {
-    return new Promise(
-      (resolve, reject) => {
-        this.apiClient.getOAuthToken(
-          clientID,
-          clientSecret,
-          authCode,
-          callbackUrl,
-        ).then(
-          tokenResponse => {
-            this.apiClient.getApiKey(tokenResponse['access_token']).then(
-              apiResponse => {
-                this.setApiKey(apiResponse['apiKey']);
-                resolve();
-              }
-            ).catch(
-              apiError => {
-                reject(apiError);
-              }
-            );
-          }
-        ).catch(
-          tokenError => {
-            reject(tokenError);
-          }
-        );
-      }
-    );
+  async oAuthenticate(clientID, clientSecret, authCode, callbackUrl) {
+    var tokenResponse = await this.apiClient.getOAuthToken(
+        clientID,
+        clientSecret,
+        authCode,
+        callbackUrl,
+      );
+
+    var apiResponse = await this.apiClient.getApiKey(tokenResponse['access_token']);
+    this.setApiKey(apiResponse['apiKey']);
   }
 
-  purgeCache() {
-    return new Promise(
-      (resolve, reject) => {
-        this.database.destroy().then(
-          () => {
-            this.database = new Cache();
-            resolve();
-          }
-        ).catch(
-          (error) => {
-            reject(error);
-          }
-        );
-      }
-    );
+  async purgeCache() {
+    await this.database.destroy();
+    this.database = new Cache();
   }
 
   setApiKey(apiKey) {
