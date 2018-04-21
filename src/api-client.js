@@ -48,10 +48,10 @@ export class ApiClient {
    */
   apiPost(url, data, headers) {
     return request.post({
-      url: this.apiUrl + url,
+      uri: this.apiUrl + url,
       headers: this.buildHeaders(headers),
-      json: true
-    }, data);
+      json: data
+    });
   }
 
   /* Strip the path from a full URL
