@@ -6,8 +6,8 @@ import { AlveoPaths } from './paths';
  */
 export class ApiClient {
   constructor(options) {
+    this.apiUrl = options.apiUrl;
     this.apiKey = options.apiKey;
-    this.appServer = 'https://app.alveo.edu.au' //options.appServer;
   }
 
   setApiKey(apiKey) {
@@ -31,8 +31,6 @@ export class ApiClient {
       headers['X-Api-Key'] = this.apiKey;
     }
 
-    headers['Accept'] = 'application/json';
-
     return headers;
   }
 
@@ -40,8 +38,9 @@ export class ApiClient {
    */
   apiGet(url, headers) {
     return request.get({
-      url: this.appServer+'/'+url,
-      headers: this.buildHeaders(headers)
+      url: this.apiUrl + url,
+      headers: this.buildHeaders(headers),
+      json: true,
     });
   }
 
@@ -49,8 +48,9 @@ export class ApiClient {
    */
   apiPost(url, data, headers) {
     return request.post({
-      url: this.appServer+'/'+url,
-      headers: this.buildHeaders(headers)
+      url: this.apiUrl + url,
+      headers: this.buildHeaders(headers),
+      json: true
     }, data);
   }
 
