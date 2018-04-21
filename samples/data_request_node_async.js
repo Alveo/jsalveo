@@ -50,5 +50,29 @@ async function displayItem() {
   }
 }
 
-sayHello();
-displayItem();
+async function asyncAwaitExample() {
+  try {
+    await tsalveo.purgeCache();
+    console.log("Cache purged", 'query #1 (API request made)');
+    await displayItem();
+    console.log("Query #2 (cache)");
+    await displayItem();
+    console.log("Query #3 (cache)");
+    await displayItem();
+    await tsalveo.purgeCache();
+    console.log("Cache purged", 'query #3 (API request made)');
+    await displayItem();
+    console.log("Query #5 (cache)");
+    await displayItem();
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+async function doInOrder() {
+  await asyncAwaitExample();
+  await sayHello();
+  console.log("All done!");
+}
+
+doInOrder();
