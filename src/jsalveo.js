@@ -2,14 +2,12 @@ import { ApiClient } from './api-client';
 import { Cache } from './cache';
 
 export class JsAlveo {
-  constructor(baseUrl, apiKey, verbose= true) {
+  constructor(options) {
     this.database = new Cache();
     this.apiClient = new ApiClient({
-      alveoApiUrl: baseUrl,
-      apiKey: apiKey
+      apiUrl: options.apiUrl,
+      apiKey: options.apiKey
     });
-
-    this.verbose = verbose;
   }
 
   checkCache(storageName) {
