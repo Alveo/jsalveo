@@ -15,7 +15,7 @@
 
 import { JsAlveo } from '../src/jsalveo';
 
-var tsalveo = new JsAlveo(
+var jsalveo = new JsAlveo(
   {
     apiUrl: "https://app.alveo.edu.au",
     apiKey: process.env.ALVEO_API_KEY
@@ -24,7 +24,7 @@ var tsalveo = new JsAlveo(
 
 async function sayHello() {
   try {
-    var response = await tsalveo.getUserDetails();
+    var response = await jsalveo.getUserDetails();
     console.log("Hello", response.first_name, response.last_name + "!");
   } catch (response) {
     console.log("An error has occurred:");
@@ -34,7 +34,7 @@ async function sayHello() {
 
 async function displayItem() {
   try {
-    var data = await tsalveo.getItem("austalk/2_642_2_7_001");
+    var data = await jsalveo.getItem("austalk/2_642_2_7_001");
     console.log(
       data['alveo:metadata']['dcterms:title'],
       data['alveo:metadata']['dcterms:type'],
@@ -52,14 +52,14 @@ async function displayItem() {
 
 async function asyncAwaitExample() {
   try {
-    await tsalveo.purgeCache();
+    await jsalveo.purgeCache();
     console.log("Cache purged", 'query #1 (API request made)');
     await displayItem();
     console.log("Query #2 (cache)");
     await displayItem();
     console.log("Query #3 (cache)");
     await displayItem();
-    await tsalveo.purgeCache();
+    await jsalveo.purgeCache();
     console.log("Cache purged", 'query #3 (API request made)');
     await displayItem();
     console.log("Query #5 (cache)");

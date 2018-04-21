@@ -13,14 +13,14 @@
 
 import { JsAlveo } from '../src/jsalveo';
 
-var tsalveo = new JsAlveo(
+var jsalveo = new JsAlveo(
   {
     apiUrl: "https://app.alveo.edu.au",
     apiKey: process.env.ALVEO_API_KEY
   }
 );
 
-tsalveo.getUserDetails().then(
+jsalveo.getUserDetails().then(
   (response) => {
     console.log("Hello", response.first_name, response.last_name + "!");
   }
@@ -31,7 +31,7 @@ tsalveo.getUserDetails().then(
   }
 );
 
-tsalveo.getItem("austalk/2_642_2_7_001").then(
+jsalveo.getItem("austalk/2_642_2_7_001").then(
   (data) => {
     console.log(
       data['alveo:metadata']['dcterms:title'],
