@@ -8,4 +8,5 @@ export const AlveoPaths = {
 }
 
 export const TranscriberServicesPaths = {
+  segmenterSuffix: '/api/segment/url'
 }
