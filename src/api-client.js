@@ -37,8 +37,9 @@ export class ApiClient {
   /* Send a get request to Alveo
    */
   apiGet(url, headers) {
-    return request.get({
-      url: this.apiUrl + url,
+    return request({
+      method: 'GET',
+      uri: this.apiUrl + url,
       headers: this.buildHeaders(headers),
       json: true,
     });
@@ -47,7 +48,8 @@ export class ApiClient {
   /* Send a post request to Alveo
    */
   apiPost(url, data, headers) {
-    return request.post({
+    return request({
+      method: 'POST',
       uri: this.apiUrl + url,
       headers: this.buildHeaders(headers),
       json: data
