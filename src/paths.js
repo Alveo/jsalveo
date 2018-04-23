@@ -7,3 +7,5 @@ export const AlveoPaths = {
   userDetails: '/account/get_details',
 }
 
+export const TranscriberServicesPaths = {
+}
