@@ -23,7 +23,7 @@ export class ApiClient {
     var headers = {
     }
 
-    if (additionalHeaders != undefined) {
+    if (additionalHeaders != null) {
       headers = additionalHeaders;
     }
 
@@ -36,12 +36,13 @@ export class ApiClient {
 
   /* Send a get request to Alveo
    */
-  apiGet(url, headers) {
+  apiGet(url, headers, encoding= 'utf-8') {
     return request({
       method: 'GET',
       uri: this.apiUrl + url,
       headers: this.buildHeaders(headers),
-      json: true,
+      json: (encoding!=null)? true: false,
+      encoding: encoding
     });
   }
 
@@ -96,8 +97,7 @@ export class ApiClient {
    *  Expects ArrayBuffer back from subscribe
    */
   getDocument(itemId, documentId) {
-    return this.apiGet(AlveoPaths.itemSuffix + '/' + this.stripDomain(itemId) + '/document/' + documentId,
-      {'responseType': 'arraybuffer'});
+    return this.apiGet(AlveoPaths.itemSuffix + '/' + this.stripDomain(itemId) + '/document/' + documentId, null, null);
   }
 
   /* Create a request to get an OAuth token

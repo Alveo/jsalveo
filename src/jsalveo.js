@@ -39,6 +39,10 @@ export class JsAlveo {
       console.log('jsAlveo: Making', request.method, 'request for', request.uri.href);
       var response = await request;
 
+      if (request.encoding == null) {
+        response = response.buffer;
+      }
+
       if (useCache) {
         console.log('jsAlveo: Caching ' + storageKey);
         await this.database.put(storageKey, {storage: response});
