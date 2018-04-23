@@ -26,7 +26,7 @@ export class JsAlveo {
         if (data != null) {
           console.log('jsAlveo: Using cache for: ' + storageKey);
 
-          if (request == null) {
+          if (request != null) {
             request.abort();
           }
 
