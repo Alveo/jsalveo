@@ -99,7 +99,12 @@ export class JsAlveo {
     this.database = new Cache();
   }
 
+  async purgeCacheByKey(storageKey) {
+    await this.database.put(storageKey, {storage: null});
+  }
+
   setApiKey(apiKey) {
     this.apiClient.setApiKey(apiKey);
   }
+
 }
