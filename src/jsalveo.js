@@ -3,6 +3,10 @@ import { Cache } from './cache';
 
 export class JsAlveo {
   constructor(options) {
+    if (options.apiKey == '') {
+      console.log('jsAlveo: [Warn] You should set apiKey to null to instead of \'\'.',
+                    'jsAlveo will send empty X-Api-Key header otherwise.');
+    }
     this.database = new Cache();
     this.apiClient = new ApiClient({
       apiUrl: options.apiUrl,
@@ -12,7 +16,7 @@ export class JsAlveo {
 
   async retrieve(storageKey, request= null, useCache= true) {
     if (!useCache && request == null) {
-      throw new Error("Both cache and no API request provided, this is undefined behaviour");
+      throw new Error('Both cache and no API request provided, this is undefined behaviour');
     }
 
     if (useCache) {
@@ -43,7 +47,7 @@ export class JsAlveo {
       return response;
     }
 
-    throw new Error("No data");
+    throw new Error('No data');
   }
 
   getListDirectory(useCache= true, useApi= true) {
@@ -72,7 +76,7 @@ export class JsAlveo {
 
   getDocument(item_id, document_id, useCache= true, useApi= true) {
     return this.retrieve(
-      'document:' + item_id + ":" + document_id,
+      'document:' + item_id + ':' + document_id,
       (useApi)? this.apiClient.getDocument(item_id, file_id): null,
       useCache
     );
@@ -107,4 +111,7 @@ export class JsAlveo {
     this.apiClient.setApiKey(apiKey);
   }
 
+  unregister() {
+    this.apiClient.setApiKey(null);
+  }
 }
