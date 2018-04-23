@@ -77,7 +77,7 @@ export class JsAlveo {
   getDocument(item_id, document_id, useCache= true, useApi= true) {
     return this.retrieve(
       'document:' + item_id + ':' + document_id,
-      (useApi)? this.apiClient.getDocument(item_id, file_id): null,
+      (useApi)? this.apiClient.getDocument(item_id, document_id): null,
       useCache
     );
   }
