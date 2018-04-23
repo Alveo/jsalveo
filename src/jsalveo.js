@@ -10,54 +10,72 @@ export class JsAlveo {
     });
   }
 
-  async retrieve(request, storageClass, useCache= true, useApi= true) {
-    if (!useCache && !useApi) {
-      request.abort();
-      throw new Error("Both cache and API disabled, this is undefined behaviour");
+  async retrieve(storageKey, request= null, useCache= true) {
+    if (!useCache && request == null) {
+      throw new Error("Both cache and no API request provided, this is undefined behaviour");
     }
 
     if (useCache) {
       try {
-        var data = await this.database.get(storageClass);
+        var data = await this.database.get(storageKey);
         data = data['storage'];
         if (data != null) {
-          console.log('jsAlveo: Using cache for: ' + storageClass);
-          request.abort();
+          console.log('jsAlveo: Using cache for: ' + storageKey);
+
+          if (request == null) {
+            request.abort();
+          }
+
           return data;
         }
       } catch (error) { } // Ignore because we might have other options
     }
 
-    if (useApi) {
+    if (request != null) {
       console.log('jsAlveo: Making', request.method, 'request for', request.uri.href);
       var response = await request;
 
       if (useCache) {
-        console.log('jsAlveo: Caching ' + storageClass);
-        await this.database.put(storageClass, {storage: response});
+        console.log('jsAlveo: Caching ' + storageKey);
+        await this.database.put(storageKey, {storage: response});
       }
 
       return response;
     }
 
-    request.abort();
     throw new Error("No data");
   }
 
   getListDirectory(useCache= true, useApi= true) {
-    return this.retrieve(this.apiClient.getListIndex(), 'lists', useCache, useApi);
+    return this.retrieve(
+      'lists', 
+      (useApi)? this.apiClient.getListIndex(): null, 
+      useCache
+    );
   }
 
   getList(list_id, useCache= true, useApi= true) {
-    return this.retrieve(this.apiClient.getList(list_id), 'list:' + list_id, useCache, useApi);
+    return this.retrieve(
+      'list:' + list_id,
+      (useApi)? this.apiClient.getList(list_id): null,
+      useCache
+    );
   }
 
   getItem(item_id, useCache= true, useApi= true) {
-    return this.retrieve(this.apiClient.getItem(item_id), 'item:' + item_id, useCache, useApi);
+    return this.retrieve(
+      'item:' + item_id,
+      (useApi)? this.apiClient.getItem(item_id): null,
+      useCache
+    );
   }
 
-  getAudioFile(item_id, file_id, useCache= true, useApi = true) {
-    return this.retrieve(this.apiClient.getDocument(item_id, file_id), 'docfile:' + file_id, useCache, useApi);
+  getAudioFile(item_id, file_id, useCache= true, useApi= true) {
+    return this.retrieve(
+      'docfile:' + file_id,
+      (useApi)? this.apiClient.getDocument(item_id, file_id): null,
+      useCache
+    );
   }
 
   getUserDetails() {
