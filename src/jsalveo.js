@@ -10,13 +10,9 @@ export class JsAlveo {
     });
   }
 
-  async retrieve(
-    request,
-    storageClass,
-    useCache= true,
-    useApi= true,
-  ) {
+  async retrieve(request, storageClass, useCache= true, useApi= true) {
     if (!useCache && !useApi) {
+      request.abort();
       throw new Error("Both cache and API disabled, this is undefined behaviour");
     }
 
@@ -25,22 +21,26 @@ export class JsAlveo {
         var data = await this.database.get(storageClass);
         data = data['storage'];
         if (data != null) {
-          console.log('Using cache for: ' + storageClass);
+          console.log('jsAlveo: Using cache for: ' + storageClass);
+          request.abort();
           return data;
         }
       } catch (error) { } // Ignore because we might have other options
     }
 
     if (useApi) {
+      console.log('jsAlveo: Making', request.method, 'request for', request.uri.href);
       var response = await request;
 
       if (useCache) {
-        console.log('Caching ' + storageClass);
+        console.log('jsAlveo: Caching ' + storageClass);
         await this.database.put(storageClass, {storage: response});
       }
 
       return response;
     }
+
+    request.abort();
     throw new Error("No data");
   }
 
