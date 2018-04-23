@@ -70,9 +70,9 @@ export class JsAlveo {
     );
   }
 
-  getAudioFile(item_id, file_id, useCache= true, useApi= true) {
+  getDocument(item_id, document_id, useCache= true, useApi= true) {
     return this.retrieve(
-      'docfile:' + file_id,
+      'document:' + item_id + ":" + document_id,
       (useApi)? this.apiClient.getDocument(item_id, file_id): null,
       useCache
     );
