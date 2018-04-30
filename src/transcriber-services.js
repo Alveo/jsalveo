@@ -6,7 +6,12 @@ export class TranscriberServices extends Client {
     super(options);
   }
 
+  buildHeaders(additionalHeaders) {
+    headers = super.buildHeaders(additionalHeaders);
+    headers['X-Api-Type'] = "alveo"
+  }
+
   segment(path) {
-    return this.apiGet(TranscriberServicesPaths.segmenterSuffix + '?url=' + path);
+    return this.apiGet(TranscriberServicesPaths.segmenterSuffix + '?remote_url=' + path);
   }
 }
