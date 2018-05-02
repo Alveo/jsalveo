@@ -1,6 +1,6 @@
 {
   "name": "@alveo-vl/jsalveo",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "JavaScript (ES6) library for Alveo backend",
   "main": "dist/index.js",
   "license": "MIT",

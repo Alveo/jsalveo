@@ -17,7 +17,9 @@ import { TranscriberServices } from '../src/transcriber-services';
 
 var alveots = new TranscriberServices(
   {
-    apiUrl: 'https://segmenter.apps.alveo.edu.au'
+    apiUrl: 'https://segmenter.apps.alveo.edu.au',
+    apiAuth: 'app.alveo.edu.au',
+    apiKey: process.env.ALVEO_API_KEY
   }
 );
 
