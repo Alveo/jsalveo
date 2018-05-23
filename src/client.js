@@ -14,11 +14,18 @@ export class Client {
    *  Should be used before making an API request
    */
   buildHeaders(additionalHeaders) {
-    var headers = {
-    }
+    let headers = {}
 
     if (additionalHeaders != null) {
       headers = additionalHeaders;
+    }
+
+    if (headers['Content-Type'] == undefined) {
+      headers['Content-Type'] = 'application/json';
+    }
+
+    if (headers['Accept'] == undefined) {
+      headers['Accept'] = 'application/json';
     }
 
     if (this.apiKey != null ) {
@@ -34,8 +41,6 @@ export class Client {
     return new Request(this.apiUrl + url, {
       method: 'GET',
       headers: this.buildHeaders(headers),
-      json: (encoding!=null)? true: false,
-      encoding: encoding
     });
   }
 
@@ -45,7 +50,7 @@ export class Client {
     return new Request(this.apiUrl + url, {
       method: 'POST',
       headers: this.buildHeaders(headers),
-      json: data
+      body: data
     });
   }
 
