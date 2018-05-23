@@ -50,7 +50,7 @@ export class Client {
     return new Request(this.apiUrl + url, {
       method: 'POST',
       headers: this.buildHeaders(headers),
-      body: data
+      body: JSON.stringify(data)
     });
   }
 

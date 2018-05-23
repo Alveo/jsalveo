@@ -89,12 +89,12 @@ export class JsAlveo {
   }
 
   async oAuthenticate(clientID, clientSecret, authCode, callbackUrl) {
-    var tokenResponse = await this.apiClient.getOAuthToken(
+    var tokenResponse = await fetch(this.apiClient.getOAuthToken(
         clientID,
         clientSecret,
         authCode,
         callbackUrl,
-      );
+      ));
     tokenResponse = await tokenResponse.json()
 
     var apiResponse = await fetch(this.apiClient.getApiKey(tokenResponse['access_token']));

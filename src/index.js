@@ -1,22 +1,8 @@
-export { JsAlveo } from './jsalveo';
-export { TranscriberServices } from './transcriber-services';
-
 import { JsAlveo } from './jsalveo';
+import { TranscriberServices } from './transcriber-services';
 
-var jsalveo = new JsAlveo(
-  {
-    apiUrl: "https://app.alveo.edu.au",
-    apiKey: "",
-  }
-);
+window.jsalveo = JsAlveo;
+window.jsalveo_transcriber_services = TranscriberServices;
 
-async function getListDirectory() {
-  try {
-    var lists = await jsalveo.getDocument("austalk/1_1274_2_7_001", "1_1274_2_7_001-ch6-speaker16.wav");
-    console.log(lists);
-  } catch(error) {
-    console.log(error.message);
-  }
-}
-
-getListDirectory();
+export { JsAlveo };
+export { TranscriberServices };
