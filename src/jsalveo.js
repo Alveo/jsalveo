@@ -22,6 +22,8 @@ export class JsAlveo {
     if (useCache) {
       try {
         var data = await this.database.get(storageKey);
+        data = data.toArray();
+        console.log(data)
         data = data['storage'];
         if (data != null) {
           console.log('jsAlveo: Using cache for: ' + storageKey);
