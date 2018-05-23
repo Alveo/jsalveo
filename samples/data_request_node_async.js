@@ -26,9 +26,8 @@ async function sayHello() {
   try {
     var response = await jsalveo.getUserDetails();
     console.log("Hello", response.first_name, response.last_name + "!");
-  } catch (response) {
-    console.log("An error has occurred:");
-    console.log(" ", response.statusCode, response.error.error);
+  } catch (error) {
+    console.log("An error has occurred:", error);
   }
 }
 
@@ -44,9 +43,8 @@ async function displayItem() {
     for (var doc of data['alveo:documents']) {
       console.log("-", doc['dcterms:identifier']);
     }
-  } catch (response) {
-    console.log("An error has occurred:");
-    console.log(" ", response.statusCode, response.error.error);
+  } catch (error) {
+    console.log("An error has occurred:", error);
   }
 }
 

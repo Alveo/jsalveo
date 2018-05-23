@@ -21,13 +21,13 @@ var jsalveo = new JsAlveo(
   }
 );
 
-async function getListDirectory() {
+async function getDocument() {
   try {
     var lists = await jsalveo.getDocument("austalk/1_1274_2_7_001", "1_1274_2_7_001-ch6-speaker16.wav");
     console.log(lists);
   } catch(error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 
-getListDirectory();
+getDocument();

@@ -25,9 +25,8 @@ jsalveo.getUserDetails().then(
     console.log("Hello", response.first_name, response.last_name + "!");
   }
 ).catch(
-  (response) => {
-    console.log("An error has occurred:");
-    console.log(" ", response.statusCode, response.error.error);
+  (error) => {
+    console.log("An error has occurred:", error);
   }
 );
 
@@ -44,8 +43,7 @@ jsalveo.getItem("austalk/2_642_2_7_001").then(
     }
   }
 ).catch(
-  (response) => {
-    console.log("An error has occurred:");
-    console.log(" ", response.statusCode, response.error.error);
+  (error) => {
+    console.log("An error has occurred:", error);
   }
 );

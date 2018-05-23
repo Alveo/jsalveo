@@ -28,7 +28,7 @@ async function autosegment() {
     var segments = await alveots.segment('https://app.alveo.edu.au/catalog/austalk/1_1274_2_7_001/document/1_1274_2_7_001-ch6-speaker16.wav');
     console.log(segments);
   } catch(error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 

@@ -23,10 +23,10 @@ var jsalveo = new JsAlveo(
 
 async function getListDirectory() {
   try {
-    var lists = await jsalveo.getListDirectory(true, false);
+    var lists = await jsalveo.getListDirectory(true, true);
     console.log(lists);
   } catch(error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 
