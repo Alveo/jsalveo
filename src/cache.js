@@ -3,11 +3,7 @@ import Dexie from 'dexie';
 export class Cache {
   constructor() {
     this.database = new Dexie("jsalveo-cache");
-    this.database.version(1).stores(
-      {
-        cache: "++id, name"
-      }
-    )
+    this.database.version(1).stores({cache: ""})
   }
 
   destroy() {
@@ -15,13 +11,10 @@ export class Cache {
   }
 
   get(key) {
-    return this.database.cache.where("name").equals(key).first();
+    return this.database.cache.get(key);
   }
 
   put(key, value) {
-    return this.database.cache.put({
-      name: key,
-      value: value,
-    })
+    return this.database.cache.put(value, key)
   }
 }
