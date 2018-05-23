@@ -1,6 +1,6 @@
 module.exports = {
-  entry: ["./src/index.js"],
-  // entry: ["babel-polyfill", "./src/index.js"],
+  //entry: ["./src/index.js"],
+  entry: ["babel-polyfill", "./src/index.js"],
  
   output: {
     path: __dirname + "/dist",
@@ -8,7 +8,11 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+      { 
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+      }
     ]
   },
 };

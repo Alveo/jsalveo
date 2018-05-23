@@ -6,7 +6,7 @@ import { JsAlveo } from './jsalveo';
 var jsalveo = new JsAlveo(
   {
     apiUrl: "https://app.alveo.edu.au",
-    apiKey: process.env.ALVEO_API_KEY
+    apiKey: "",
   }
 );
 
