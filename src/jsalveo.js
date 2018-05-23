@@ -42,7 +42,7 @@ export class JsAlveo {
 
       if (useCache) {
         console.log('jsAlveo: Caching ' + storageKey);
-        let a = await this.database.put(storageKey, {storage: response});
+        let a = await this.database.put(storageKey, response);
       }
 
       return response;

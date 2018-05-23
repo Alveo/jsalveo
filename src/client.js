@@ -37,7 +37,7 @@ export class Client {
 
   /* Send a get request to Alveo
    */
-  apiGet(url, headers, encoding= 'utf-8') {
+  apiGet(url, headers) {
     return new Request(this.apiUrl + url, {
       method: 'GET',
       headers: this.buildHeaders(headers),

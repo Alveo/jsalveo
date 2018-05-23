@@ -42,7 +42,12 @@ export class ApiClient extends Client {
    *  Expects ArrayBuffer back from subscribe
    */
   getDocument(itemId, documentId) {
-    return this.apiGet(AlveoPaths.itemSuffix + '/' + this.stripDomain(itemId) + '/document/' + documentId, null, null);
+    return this.apiGet(
+      AlveoPaths.itemSuffix + '/' + this.stripDomain(itemId) + '/document/' + documentId,
+      {
+        'Accept': 'arraybuffer'
+      }
+    );
   }
 
   /* Create a request to get an OAuth token
