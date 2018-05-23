@@ -21,41 +21,31 @@ export class JsAlveo {
 
     if (useCache) {
       try {
-        /*
         var data = await this.database.get(storageKey);
         if (data != null) {
           console.log('jsAlveo: Using cache for: ' + storageKey);
 
-          if (request != null) {
-            //request.abort();
-          }
-
           return data;
         }
-        */
-      } catch (error) {
-        console.log(error)
-      } // Ignore because we might have other options
+      } catch (error) {} // Ignore because we might have other options
     }
 
     if (request != null) {
-      //console.log('jsAlveo: Making', request.method, 'request for', request.href);
-      var response = await request;
-      console.log("response", response)
-      let response_data = await response.blob()
-      console.log("B", response.headers.keys())
-      console.log(response_data)
+      let response = await fetch(request);
+      console.log('jsAlveo: Making', request.method, 'request for', request.url);
 
       if (request.encoding == null) {
-        response = response.buffer;
+        response = await response.arrayBuffer();
+      } else {
+        response = await response.json();
       }
 
       if (useCache) {
         console.log('jsAlveo: Caching ' + storageKey);
-        let a = await this.database.put(storageKey, {storage: response.blob});
+        let a = await this.database.put(storageKey, {storage: response});
       }
 
-      return response.blob;
+      return response;
     }
 
     throw new Error('No data');
