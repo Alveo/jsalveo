@@ -15,7 +15,7 @@ export class Cache {
   }
 
   get(key) {
-    return this.database.cache.where(key);
+    return this.database.cache.where("name").equals(key).first();
   }
 
   put(key, value) {
