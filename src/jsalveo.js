@@ -34,10 +34,10 @@ export class JsAlveo {
       let response = await fetch(request);
       console.log('jsAlveo: Making', request.method, 'request for', request.url);
 
-      if (request.encoding == null) {
-        response = await response.arrayBuffer();
-      } else {
+      if (request.headers.get('Accept') == 'application/json') {
         response = await response.json();
+      } else {
+        response = await response.arrayBuffer();
       }
 
       if (useCache) {
@@ -83,8 +83,9 @@ export class JsAlveo {
     );
   }
 
-  getUserDetails() {
-    return this.apiClient.getUserDetails();
+  async getUserDetails() {
+    let response = await fetch(this.apiClient.getUserDetails());
+    return response.json()
   }
 
   async oAuthenticate(clientID, clientSecret, authCode, callbackUrl) {
@@ -94,8 +95,11 @@ export class JsAlveo {
         authCode,
         callbackUrl,
       );
+    tokenResponse = await tokenResponse.json()
 
-    var apiResponse = await this.apiClient.getApiKey(tokenResponse['access_token']);
+    var apiResponse = await fetch(this.apiClient.getApiKey(tokenResponse['access_token']));
+    apiResponse = await apiResponse.json()
+
     this.setApiKey(apiResponse['apiKey']);
   }
 
@@ -105,7 +109,7 @@ export class JsAlveo {
   }
 
   async purgeCacheByKey(storageKey) {
-    await this.database.put(storageKey, {storage: null});
+    await this.database.put(storageKey, null);
   }
 
   setApiKey(apiKey) {

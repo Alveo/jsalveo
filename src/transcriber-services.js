@@ -15,7 +15,8 @@ export class TranscriberServices extends Client {
     return headers;
   }
 
-  segment(path) {
-    return this.apiGet(TranscriberServicesPaths.segmenterSuffix + '?remote_url=' + path);
+  async segment(path) {
+    let response = await fetch(this.apiGet(TranscriberServicesPaths.segmenterSuffix + '?remote_url=' + path));
+    return response.json()
   }
 }
