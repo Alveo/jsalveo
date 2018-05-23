@@ -1,7 +1,5 @@
 module.exports = {
   entry: "./src/index.js",
-  externals: /^[^.]/,
-  target: "node",
   output: {
       path: __dirname + "/dist",
       filename: "bundle.js"

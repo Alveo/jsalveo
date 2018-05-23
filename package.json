@@ -11,7 +11,8 @@
   },
   "scripts": {
     "build": "babel -l --out-dir dist/ src/",
-    "release": "npm publish"
+    "release": "npm publish",
+    "webpack": "webpack"
   },
   "author": "David L. Irving <david.l.irving@gmail.com>",
   "repository": {
@@ -20,6 +21,9 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
   }
 }
