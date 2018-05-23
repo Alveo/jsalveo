@@ -5,9 +5,7 @@
   "main": "dist/jsalveo.bundle.js",
   "license": "MIT",
   "dependencies": {
-    "dexie": "^2.0.3",
-    "request": "^2.85.0",
-    "request-promise-native": "^1.0.5"
+    "dexie": "^2.0.3"
   },
   "scripts": {
     "build": "babel -l --minified -o dist/jsalveo.min.js src/",
@@ -22,9 +20,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
-    "babel-plugin-transform-regenerator": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
   }

@@ -21,12 +21,13 @@ export class JsAlveo {
 
     if (useCache) {
       try {
+        throw new Exception("Ignore");
         var data = await this.database.get(storageKey);
         if (data != null) {
           console.log('jsAlveo: Using cache for: ' + storageKey);
 
           if (request != null) {
-            request.abort();
+            //request.abort();
           }
 
           return data;
@@ -37,7 +38,7 @@ export class JsAlveo {
     }
 
     if (request != null) {
-      console.log('jsAlveo: Making', request.method, 'request for', request.uri.href);
+      //console.log('jsAlveo: Making', request.method, 'request for', request.href);
       var response = await request;
 
       if (request.encoding == null) {

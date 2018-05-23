@@ -1,15 +1,14 @@
 module.exports = {
-  entry: ["babel-polyfill", "./src/index.js"],
-  //externals: /^[^.]/,
-  //target: "node",
+  entry: ["./src/index.js"],
+  // entry: ["babel-polyfill", "./src/index.js"],
+ 
   output: {
-      path: __dirname + "/dist",
-      filename: "jsalveo.bundle.js"
+    path: __dirname + "/dist",
+    filename: "jsalveo.bundle.js"
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
     ]
   },
-  node: {crypto: true, stream: true, fs: 'empty', net: 'empty', tls: 'empty'}
 };

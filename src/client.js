@@ -1,5 +1,3 @@
-import request from 'request-promise-native';
-
 export class Client {
   constructor(options) {
     this.apiUrl = options.apiUrl;
@@ -33,9 +31,8 @@ export class Client {
   /* Send a get request to Alveo
    */
   apiGet(url, headers, encoding= 'utf-8') {
-    return request({
+    return fetch(this.apiUrl + url, {
       method: 'GET',
-      uri: this.apiUrl + url,
       headers: this.buildHeaders(headers),
       json: (encoding!=null)? true: false,
       encoding: encoding
@@ -45,9 +42,8 @@ export class Client {
   /* Send a post request to Alveo
    */
   apiPost(url, data, headers) {
-    return request({
+    return fetch(this.apiUrl + url, {
       method: 'POST',
-      uri: this.apiUrl + url,
       headers: this.buildHeaders(headers),
       json: data
     });
