@@ -1,17 +1,18 @@
 {
   "name": "@alveo-vl/jsalveo",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "JavaScript (ES6) library for Alveo backend",
-  "main": "dist/index.js",
+  "main": "dist/jsalveo.bundle.js",
   "license": "MIT",
   "dependencies": {
-    "pouchdb": "^6.4.3",
+    "dexie": "^2.0.3",
     "request": "^2.85.0",
     "request-promise-native": "^1.0.5"
   },
   "scripts": {
-    "build": "babel -l --out-dir dist/ src/",
-    "release": "npm publish"
+    "build": "babel -l --minified -o dist/jsalveo.min.js src/",
+    "release": "npm publish",
+    "webpack": "webpack"
   },
   "author": "David L. Irving <david.l.irving@gmail.com>",
   "repository": {
@@ -20,6 +21,11 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
   }
 }

@@ -1,10 +1,10 @@
 module.exports = {
-  entry: "./src/index.js",
-  externals: /^[^.]/,
-  target: "node",
+  entry: ["babel-polyfill", "./src/index.js"],
+  //externals: /^[^.]/,
+  //target: "node",
   output: {
       path: __dirname + "/dist",
-      filename: "bundle.js"
+      filename: "jsalveo.bundle.js"
   },
   module: {
     rules: [
