@@ -10,8 +10,8 @@
     "request-promise-native": "^1.0.5"
   },
   "scripts": {
-    "build": "babel src -d dist",
-    "release": "rm -r dist/ && babel src -d dist && npm publish"
+    "build": "babel -l --out-dir dist/ src/",
+    "release": "npm publish"
   },
   "author": "David L. Irving <david.l.irving@gmail.com>",
   "repository": {
