@@ -1,6 +1,6 @@
 {
   "name": "@alveo-vl/jsalveo",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "JavaScript (ES6) library for Alveo backend",
   "main": "dist/jsalveo.bundle.js",
   "license": "MIT",
@@ -8,9 +8,8 @@
     "dexie": "^2.0.3"
   },
   "scripts": {
-    "build": "babel -l --minified -o dist/jsalveo.min.js src/",
-    "release": "npm publish",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "release": "npm publish"
   },
   "author": "David L. Irving <david.l.irving@gmail.com>",
   "repository": {

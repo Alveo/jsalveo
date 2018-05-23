@@ -1,7 +1,7 @@
 module.exports = {
   //entry: ["./src/index.js"],
   entry: ["babel-polyfill", "./src/index.js"],
- 
+  target: 'node',
   output: {
     path: __dirname + "/dist",
     filename: "jsalveo.bundle.js"
