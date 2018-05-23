@@ -31,7 +31,7 @@ export class Client {
   /* Send a get request to Alveo
    */
   apiGet(url, headers, encoding= 'utf-8') {
-    return fetch(this.apiUrl + url, {
+    return new Request(this.apiUrl + url, {
       method: 'GET',
       headers: this.buildHeaders(headers),
       json: (encoding!=null)? true: false,
@@ -42,7 +42,7 @@ export class Client {
   /* Send a post request to Alveo
    */
   apiPost(url, data, headers) {
-    return fetch(this.apiUrl + url, {
+    return new Request(this.apiUrl + url, {
       method: 'POST',
       headers: this.buildHeaders(headers),
       json: data
