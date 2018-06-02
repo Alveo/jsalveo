@@ -4,14 +4,11 @@
   "description": "JavaScript (ES6) library for Alveo backend",
   "main": "dist/jsalveo.bundle.js",
   "license": "MIT",
-  "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.49",
-    "dexie": "^2.0.3"
-  },
   "scripts": {
-    "webpack": "webpack",
+    "build": "npm run browserify && npm run browserify-core",
     "release": "npm publish",
-    "browserify": "browserify src/index.js -o dist/jsalveo.bundle.js -t [ babelify --presets [ '@babel/preset-env' ] ]"
+    "browserify": "browserify src/index.js -o dist/jsalveo.bundle.js -t [ babelify --presets [ '@babel/preset-env' ] ]",
+    "browserify-core": "browserify src/index.js -x dexie -x @babel/runtime -x swagger-client -o dist/jsalveo.core.bundle.js -t [ babelify --presets [ '@babel/preset-env' ] ]"
   },
   "author": "David L. Irving <david.l.irving@gmail.com>",
   "repository": {
@@ -22,6 +19,11 @@
     "plugins": [
       "@babel/transform-runtime"
     ]
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.49",
+    "dexie": "^2.0.3",
+    "swagger-client": "^3.8.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
