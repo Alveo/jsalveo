@@ -8,7 +8,7 @@
     "build": "npm run browserify && npm run browserify-core",
     "release": "npm publish",
     "browserify": "browserify src/index.js -o dist/jsalveo.bundle.js -t [ babelify --presets [ '@babel/preset-env' ] ]",
-    "browserify-core": "browserify src/index.js -x dexie -x @babel/runtime -x swagger-client -o dist/jsalveo.core.bundle.js -t [ babelify --presets [ '@babel/preset-env' ] ]"
+    "test": "jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "author": "David L. Irving <david.l.irving@gmail.com>",
   "repository": {
@@ -20,18 +20,15 @@
       "@babel/transform-runtime"
     ]
   },
-  "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.49",
-    "dexie": "^2.0.3",
-    "swagger-client": "^3.8.6"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.49",
     "@babel/core": "^7.0.0-beta.49",
     "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
     "@babel/preset-env": "^7.0.0-beta.49",
-    "babel-loader": "^7.1.4",
+    "@babel/runtime": "^7.0.0-beta.49",
     "babelify": "^9.0.0",
-    "browserify": "^16.2.2"
+    "browserify": "^16.2.2",
+    "dexie": "^2.0.4"
   }
 }
